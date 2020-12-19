@@ -54,19 +54,25 @@ def start_sonarqube_scanner():
         if os.name.lower() in ["darwin", "posix"]: # mac
             SONARSCANNER_PATH = "/usr/local/opt/sonar-scanner/bin/sonar-scanner"
         else: # os.name == "nt" Windows
-            SONARSCANNER_PATH = "X:\\_Work\\Software\\sonar-scanner\\sonar-scanner-4.5.0.2216-windows\\binsonar-scanner.bat"
-        os.system(SONARSCANNER_PATH)
+            SONARSCANNER_PATH = "X:\\_Work\\Software\\sonar-scanner\\sonar-scanner-4.5.0.2216-windows\\bin\\sonar-scanner.bat"
+        os.system("sonar-scanner.bat")
     except Exception as e:
         print("Could not run sonar scanner.")
         raise(e)
 
 
 def load_metrics_sonarqube(component_name):
+
+    url = f"http://localhost:9000/api/measures/component?component={component_name}&metricKeys=new_coverage,coverage,new_technical_debt,new_critical_violations,new_major_violations"
+    token="cf9d753738caf6262a91893ba5c8ffd25ee4df20"
     try:
-        resp = requests.get(f"http://localhost:9000/api/measures/component?component={component_name}&metricKeys=new_coverage,coverage,new_technical_debt,new_critical_violations,new_major_violations")
-        if resp.status_code != 200:
-            raise Exception('GET /tasks/ {}'.format(resp.status_code))
-        metrics = resp.json()['component']['measures']
+        session = requests.Session()
+        session.auth = token, ''
+        call = getattr(session, 'get')
+        res = call(url)
+        if res.status_code != 200:
+            raise Exception('GET /tasks/ {}'.format(res.status_code))
+        metrics = res.json()['component']['measures']
         return metrics
     except Exception as e:
         raise e
@@ -102,7 +108,8 @@ def pre_commit_sonarqube():
 
     except Exception as e:
         print("Commit aborted. Error in pre-commit. See details below.")
-        exit(f"Reason: {e}")
+        print("Reason", e)
+        exit()
 
 
 def pre_push_sonarqube():
