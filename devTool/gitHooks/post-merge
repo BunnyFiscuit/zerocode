@@ -1,0 +1,2 @@
+#!/bin/sh
+python -c "from devTool.sonarScript import pre_pull_sonarqube; pre_pull_sonarqube()"

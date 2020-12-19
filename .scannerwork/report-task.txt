@@ -1,0 +1,6 @@
+projectKey=zerocode
+serverUrl=http://localhost:9000
+serverVersion=8.6.0.39681
+dashboardUrl=http://localhost:9000/dashboard?id=zerocode
+ceTaskId=AXZ8GcgEqkkXN2UcGvSC
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AXZ8GcgEqkkXN2UcGvSC
