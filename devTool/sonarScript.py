@@ -122,7 +122,7 @@ def pre_push_sonarqube():
             git_repo = Repository(str(git_repo_path))
         git_repo_name = git_repo.head.shorthand
 
-        sonarqube_metrics = load_metrics_sonarqube()
+        sonarqube_metrics = load_metrics_sonarqube("zerocode")
         # parse metrics from json format
         parsed_metrics = parse_metrics(sonarqube_metrics)
 

@@ -24,3 +24,7 @@ package.properties
 .settings
 
 */target
+
+.scannerwork/*
+devTool/__pycache__
+venv/
